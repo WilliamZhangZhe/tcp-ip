@@ -32,9 +32,22 @@ TCP UDP
   2. 在1个RTT内，cwnd最多增加1
 ```
 
-1. 发生RTO超时，采用以下拥塞避免算法
+* 发生RTO超时，重传超时数据，采用以下拥塞避免算法
 
-2. 发生重复ACK时，采用以下拥塞避免算法
+```
+1. ssthresh = cwnd ／ 2
+2. cwnd = 1
+3. 进入慢启动流程
+```
+
+* 发生重复ACK时，重传重复ack数据，采用以下拥塞避免算法
+
+```
+1. ssthresh = cwnd / 2
+2. cwnd = ssthresh + 3
+3. 凡是收到一个非更新过的ACK，cwnd = cwnd + 1
+4. 收到更新过的ACK，cwnd = ssthresh，进入拥塞避免算法
+```
 
 
 
