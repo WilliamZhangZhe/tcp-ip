@@ -64,5 +64,13 @@ D-SACK使用了SACK的第一个段来做标志，
 2. 如果SACK的第一个段的范围被SACK的第二个段覆盖，那么就是D-SACK
 ```
 
+#### 其它拥塞避免算法
 
+Reno
+
+New Reno
+
+#### RTT、RTO计算算法
+
+karn
 
