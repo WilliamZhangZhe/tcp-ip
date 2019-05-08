@@ -28,7 +28,7 @@ TCP UDP
 * 正常情况下拥塞避免算法为（以下2个要求必须同时满足）
 
 ```
-  1. 在收到1个ack时，cwnd = cwnd + 1
+  1. 在收到1个ack时，cwnd = cwnd + 1 ／ cwnd
   2. 在1个RTT内，cwnd最多增加1
 ```
 
