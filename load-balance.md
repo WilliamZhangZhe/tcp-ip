@@ -25,6 +25,8 @@ LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是�
 
 * **LVS-NAT**
 
+![](/assets/nat.png)
+
 * **LVS-DR**
 
 * **LVS-TUN**
