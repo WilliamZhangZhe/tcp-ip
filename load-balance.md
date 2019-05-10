@@ -23,9 +23,7 @@ LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是�
   RIP：Real Server IP，后端服务器的IP地址。  
   CIP：Client IP，访问客户端的IP地址。
 
-* **LVS-NAT**
-
-![](/assets/nat.png)
+* **LVS-NAT**![](/assets/nat.png)
 
 * **LVS-DR**
 
