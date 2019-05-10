@@ -10,7 +10,9 @@ Nginx主要是在应用层进行均衡服务，作为proxy代理流入的user请
 
 硬件类型均衡路由器它基于路由器的功能在IP层将流入的用户请求转发至后台server。
 
-LVS-NAT
+* **LVS-NAT**
+* LVS-DR
+* LVS-TUN
 
 ##### 参考资料
 
