@@ -35,6 +35,17 @@ LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是�
 
   \(f\). Director Server在响应客户端前，此时会将源IP地址修改为自己的VIP地址，然后响应给客户端。 此时报文的源IP为VIP，目标IP为CIP
 
+该模型的特点是
+
+```
+1. RS应该使用私有地址，RS的网关必须指向DIP
+2. DIP和RIP必须在同一个网段内
+3. 请求和响应报文都需要经过Director Server，高负载场景中，Director Server易成为性能瓶颈
+4. 支持端口映射
+5. RS可以使用任意操作系统
+缺陷：对Director Server压力会比较大，请求和响应都需经过director server
+```
+
 * **LVS-DR**
 
 * **LVS-TUN**
