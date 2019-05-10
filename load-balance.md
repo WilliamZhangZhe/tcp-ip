@@ -27,9 +27,9 @@ LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是�
 
   \(a\). 当用户请求到达Director Server，此时请求的数据报文会先到内核空间的PREROUTING链。 此时报文的源IP为CIP，目标IP为VIP
 
-    \(b\). PREROUTING检查发现数据包的目标IP是本机，将数据包送至INPUT链
+  \(b\). PREROUTING检查发现数据包的目标IP是本机，将数据包送至INPUT链
 
-\(c\). IPVS比对数据包请求的服务是否为集群服务，若是，修改数据包的目标IP地址为后端服务器IP，然后将数据包发至POSTROUTING链。 此时报文的源IP为CIP，目标IP为RIP
+   \(c\). IPVS比对数据包请求的服务是否为集群服务，若是，修改数据包的目标IP地址为后端服务器IP，然后将数据包发至POSTROUTING链。 此时报文的源IP为CIP，目标IP为RIP
 
 \(d\). POSTROUTING链通过选路，将数据包发送给Real Server
 
