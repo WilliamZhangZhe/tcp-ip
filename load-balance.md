@@ -28,12 +28,12 @@ LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是�
 请求处理流程如下
 
 ```
-(a). 当用户请求到达Director Server，此时请求的数据报文会先到内核空间的PREROUTING链。 此时报文的源IP为CIP，目标IP为VIP
-(b). PREROUTING检查发现数据包的目标IP是本机，将数据包送至INPUT链
-(c). IPVS比对数据包请求的服务是否为集群服务，若是，修改数据包的目标IP地址为后端服务器IP，然后将数据包发至POSTROUTING链。 此时报文的源IP为CIP，目标IP为RIP
-(d). POSTROUTING链通过选路，将数据包发送给Real Server
-(e). Real Server比对发现目标为自己的IP，开始构建响应报文发回给Director Server。 此时报文的源IP为RIP，目标IP为CIP
-(f). Director Server在响应客户端前，此时会将源IP地址修改为自己的VIP地址，然后响应给客户端。 此时报文的源IP为VIP，目标IP为CIP
+(a) 当用户请求到达Director Server，此时请求的数据报文会先到内核空间的PREROUTING链。 此时报文的源IP为CIP，目标IP为VIP
+(b) PREROUTING检查发现数据包的目标IP是本机，将数据包送至INPUT链
+(c) IPVS比对数据包请求的服务是否为集群服务，若是，修改数据包的目标IP地址为后端服务器IP，然后将数据包发至POSTROUTING链。 此时报文的源IP为CIP，目标IP为RIP
+(d) POSTROUTING链通过选路，将数据包发送给Real Server
+(e) Real Server比对发现目标为自己的IP，开始构建响应报文发回给Director Server。 此时报文的源IP为RIP，目标IP为CIP
+(f) Director Server在响应客户端前，此时会将源IP地址修改为自己的VIP地址，然后响应给客户端。 此时报文的源IP为VIP，目标IP为CIP
 ```
 
 该模型的特点是
@@ -47,7 +47,18 @@ LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是�
 缺陷：对Director Server压力会比较大，请求和响应都需经过director server
 ```
 
-* **LVS-DR**
+* **LVS-DR**![](/assets/dr.png)
+
+请求处理流程
+
+```
+(a) 当用户请求到达Director Server，此时请求的数据报文会先到内核空间的PREROUTING链。 此时报文的源IP为CIP，目标IP为VIP
+(b) PREROUTING检查发现数据包的目标IP是本机，将数据包送至INPUT链
+(c) IPVS比对数据包请求的服务是否为集群服务，若是，将请求报文中的源MAC地址修改为DIP的MAC地址，将目标MAC地址修改RIP的MAC地址，然后将数据包发至POSTROUTING链。 此时的源IP和目的IP均未修改，仅修改了源MAC地址为DIP的MAC地址，目标MAC地址为RIP的MAC地址 
+(d) 由于DS和RS在同一个网络中，所以是通过二层来传输。POSTROUTING链检查目标MAC地址为RIP的MAC地址，那么此时数据包将会发至Real Server。
+(e) RS发现请求报文的MAC地址是自己的MAC地址，就接收此报文。处理完成之后，将响应报文通过lo接口传送给eth0网卡然后向外发出。 此时的源IP地址为VIP，目标IP为CIP 
+(f) 响应报文最终送达至客户端
+```
 
 * **LVS-TUN**
 
