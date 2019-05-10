@@ -74,7 +74,9 @@ LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是�
 缺陷：RS和DS必须在同一机房中
 ```
 
-* **LVS-TUN**
+> 设置RIP之一的网络接口地址为VIP的原因是RS的网络数据处理模型中在IP层解析获取的数据时会判断目标IP是否为本机IP，如果不是将会丢弃包
+
+* * **LVS-TUN**
 
 ##### 参考资料
 
