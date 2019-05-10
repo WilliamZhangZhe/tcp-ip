@@ -23,7 +23,7 @@ LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是�
   RIP：Real Server IP，后端服务器的IP地址。  
   CIP：Client IP，访问客户端的IP地址。
 
-* 1. **LVS-NAT**![](/assets/nat.png)当用户请求到达Director Server，此时请求的数据报文会先到内核空间的PREROUTING链。 此时报文的源IP为CIP，目标IP为VIP
+* **LVS-NAT**![](/assets/nat.png)当用户请求到达Director Server，此时请求的数据报文会先到内核空间的PREROUTING链。 此时报文的源IP为CIP，目标IP为VIP
 
   1. PREROUTING检查发现数据包的目标IP是本机，将数据包送至INPUT链
 
