@@ -16,9 +16,9 @@ LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是�
 
 * **LVS术语**
 
-DS：Director Server。指的是前端负载均衡器节点。  
-RS：Real Server。后端真实的工作服务器。  
-VIP：向外部直接面向用户请求，作为用户请求的目标的IP地址。  
+     DS：Director Server。指的是前端负载均衡器节点。  
+     RS：Real Server。后端真实的工作服务器。  
+     VIP：向外部直接面向用户请求，作为用户请求的目标的IP地址。  
 DIP：Director Server IP，主要用于和内部主机通讯的IP地址。  
 RIP：Real Server IP，后端服务器的IP地址。  
 CIP：Client IP，访问客户端的IP地址。
