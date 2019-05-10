@@ -87,11 +87,30 @@ LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是�
 4. 修改RS上内核参数（arp_ignore和arp_announce）将RS上的VIP配置在lo接口的别名上，并限制其不能响应对VIP地址解析请求。
 ```
 
-
-
 * **LVS-TUN**
 
+在原有的IP报文外再次封装多一层IP首部，内部IP首部\(源地址为CIP，目标IIP为VIP\)，外层IP首部\(源地址为DIP，目标IP为RIP\)![](/assets/tun.png)
 
+请求处理流程
+
+```
+(a) 当用户请求到达Director Server，此时请求的数据报文会先到内核空间的PREROUTING链。 此时报文的源IP为CIP，目标IP为VIP 。
+(b) PREROUTING检查发现数据包的目标IP是本机，将数据包送至INPUT链
+(c) IPVS比对数据包请求的服务是否为集群服务，若是，在请求报文的首部再次封装一层IP报文，封装源IP为为DIP，目标IP为RIP。然后发至POSTROUTING链。 此时源IP为DIP，目标IP为RIP 
+(d) POSTROUTING链根据最新封装的IP报文，将数据包发至RS（因为在外层封装多了一层IP首部，所以可以理解为此时通过隧道传输）。 此时源IP为DIP，目标IP为RIP
+(e) RS接收到报文后发现是自己的IP地址，就将报文接收下来，拆除掉最外层的IP后，会发现里面还有一层IP首部，而且目标是自己的lo接口VIP，那么此时RS开始处理此请求，处理完成之后，通过lo接口送给eth0网卡，然后向外传递。 此时的源IP地址为VIP，目标IP为CIP
+(f) 响应报文最终送达至客户端
+```
+
+模型特点
+
+```
+1. RIP、VIP、DIP全是公网地址
+2. RS的网关不会也不可能指向DIP
+3. 所有的请求报文经由Director Server，但响应报文必须不能进过Director Server
+4. 不支持端口映射
+5. RS的系统必须支持隧道
+```
 
 ##### 参考资料
 
