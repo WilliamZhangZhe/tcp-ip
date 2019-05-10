@@ -14,7 +14,14 @@ Nginx主要是在应用层进行均衡服务，作为proxy代理流入的user请
 
 LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是一个由章文嵩博士发起的一个开源项目，它的官方网是[http://www.linuxvirtualserver.org](http://www.linuxvirtualserver.org/)现在 LVS 已经是 Linux 内核标准的一部分。使用 LVS 可以达到的技术目标是：通过 LVS 达到的负载均衡技术和 Linux 操作系统实现一个高性能高可用的 Linux 服务器集群，它具有良好的可靠性、可扩展性和可操作性。从而以低廉的成本实现最优的性能。LVS 是一个实现负载均衡集群的开源软件项目，LVS架构从逻辑上可分为调度层、Server集群层和共享存储。
 
-LVS术语
+* **LVS术语**
+
+DS：Director Server。指的是前端负载均衡器节点。  
+RS：Real Server。后端真实的工作服务器。  
+VIP：向外部直接面向用户请求，作为用户请求的目标的IP地址。  
+DIP：Director Server IP，主要用于和内部主机通讯的IP地址。  
+RIP：Real Server IP，后端服务器的IP地址。  
+CIP：Client IP，访问客户端的IP地址。
 
 * **LVS-NAT**
 
