@@ -23,13 +23,19 @@ LVS是 Linux Virtual Server 的简称，也就是Linux虚拟服务器。这是�
   RIP：Real Server IP，后端服务器的IP地址。  
   CIP：Client IP，访问客户端的IP地址。
 
-* **LVS-NAT**![](/assets/nat.png)`(a). 当用户请求到达Director Server，此时请求的数据报文会先到内核空间的PREROUTING链。 此时报文的源IP为CIP，目标IP为VIPPREROUTING检查发现数据包的目标IP是本机，将数据包送至INPUT链;IPVS比对数据包请求的服务是否为集群服务，若是，修改数据包的目标IP地址为后端服务器IP，然后将数据包发至POSTROUTING链。 此时报文的源IP为CIP，目标IP为RIP`
+* **LVS-NAT**![](/assets/nat.png)
 
-  `(d). POSTROUTING链通过选路，将数据包发送给Real Server`
+    \(a\). 当用户请求到达Director Server，此时请求的数据报文会先到内核空间的PREROUTING链。 此时报文的源IP为CIP，目标IP为VIP
 
-  `(e). Real Server比对发现目标为自己的IP，开始构建响应报文发回给Director Server。 此时报文的源IP为RIP，目标IP为CIP`
+\(b\). PREROUTING检查发现数据包的目标IP是本机，将数据包送至INPUT链
 
-  `(f). Director Server在响应客户端前，此时会将源IP地址修改为自己的VIP地址，然后响应给客户端。 此时报文的源IP为VIP，目标IP为CIP`
+\(c\). IPVS比对数据包请求的服务是否为集群服务，若是，修改数据包的目标IP地址为后端服务器IP，然后将数据包发至POSTROUTING链。 此时报文的源IP为CIP，目标IP为RIP
+
+\(d\). POSTROUTING链通过选路，将数据包发送给Real Server
+
+\(e\). Real Server比对发现目标为自己的IP，开始构建响应报文发回给Director Server。 此时报文的源IP为RIP，目标IP为CIP
+
+\(f\). Director Server在响应客户端前，此时会将源IP地址修改为自己的VIP地址，然后响应给客户端。 此时报文的源IP为VIP，目标IP为CIP
 
 * **LVS-DR**
 
